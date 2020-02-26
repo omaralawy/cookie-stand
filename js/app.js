@@ -1,214 +1,96 @@
-var Hour = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
+var hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
+//helper function
 function getRandomIntsalamon(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-//var randomCust = [];
+var salmonShops  = [];
+var container = document.getElementById('contanir');
+var tableEl = document.createElement('table');
+container.appendChild(tableEl);
 
-function Salamon(min, max, avg,randomCust) {
-    this.min = min;
-    this.max = max;
-    this.avg = avg;
-    this.randomCust = randomCust;
-};
+function Salamon(name, min, max, avg) {
+  this.name = name;
+  this.min = min;
+  this.max = max;
+  this.avg = avg;
+  this.cookiesPerHourArr = [];
+  this.total = 0;
+  console.log(this);
+  salmonShops.push(this);
+  this.getCokies();
+}
 Salamon.prototype.getCokies = function () {
-    for (let index = 0; index < Hour.length; index++) {
-        this.randomCust.push(Math.floor(((getRandomIntsalamon(this.min, this.max) * this.avg))));
-    };
-    Salamon.prototype.render = function () {
-        var container = document.getElementById("sillsfile");
-        var articleEl = document.createElement('article');
-        container.appendChild(articleEl);
+  for (let index = 0; index < hours.length; index++) {
+    var cookiesPerHour = Math.floor((getRandomIntsalamon(this.min, this.max) * this.avg));
+    this.cookiesPerHourArr.push(cookiesPerHour);
+    this.total += this.cookiesPerHourArr[index];
+  }
 
-        var h2El = document.createElement('h2');
-        h2El.textContent = 'Seattle';
-        articleEl.appendChild(h2El);
-
-
-        var ulEl = document.createElement('ul');
-        articleEl.appendChild(ulEl);
-
-        for (let index = 0; index < Hour.length; index++) {
-            var liEl = document.createElement('li');
-            liEl.textContent = `${Hour[index]}: ${this.randomCust[index]}`;
-            articleEl.appendChild(liEl);
-        }
-    }
 };
-var Salamon = new Salamon('23','65','6.3','[]')
-Salamon.getCokies();
-Salamon.render();
-var Seattle = {
-    min: 23,
-    max: 65,
-    avg: 6.3,
-    randomCust: [],
-    getCokies: function () {
-        for (let index = 0; index < Hour.length; index++) {
-            this.randomCust.push(Math.floor(((getRandomIntsalamon(this.min, this.max) * this.avg))));
-        };
-        // console.log(this.randomCust);
-        console.table(this.randomCust);
-
-    },
-    Render: function () {
-        var container = document.getElementById("sillsfile");
-        var articleEl = document.createElement('article');
-        container.appendChild(articleEl);
-
-        var h2El = document.createElement('h2');
-        h2El.textContent = 'Seattle';
-        articleEl.appendChild(h2El);
-
-
-        var ulEl = document.createElement('ul');
-        articleEl.appendChild(ulEl);
-
-        for (let index = 0; index < Hour.length; index++) {
-            var liEl = document.createElement('li');
-            liEl.textContent = `${Hour[index]}: ${this.randomCust[index]}`;
-            articleEl.appendChild(liEl);
-        }
+Salamon.prototype.render = function () {
+    var trEl = document.createElement('tr');
+    tableEl.appendChild(trEl);
+    var tdEl = document.createElement('td');
+    trEl.appendChild(tdEl);
+    tdEl.textContent = this.name;
+    for(var j = 0; j < hours.length ; j++){
+        tdEl = document.createElement('td');
+        trEl.appendChild(tdEl);
+        tdEl.textContent = this.cookiesPerHourArr[j];
     }
+    var tdTotal = document.createElement('td');
+    trEl.appendChild(tdTotal);
+    tdTotal.textContent = this.total;
 };
-Seattle.getCokies();
-Seattle.Render();
-var Tokyo = {
-    min: 3,
-    max: 24,
-    avg: 1.2,
-    randomCust: [],
-    getCokies: function () {
-        for (let index = 0; index < Hour.length; index++) {
-            this.randomCust.push(Math.floor(((getRandomIntsalamon(this.min, this.max) * this.avg))));
-        };
-        // console.log(this.randomCust);
-        console.table(this.randomCust);
-    },
-    Render: function () {
-        var container = document.getElementById("sillsfile");
-        var articleEl = document.createElement('article');
-        container.appendChild(articleEl);
+new Salamon('Seatle', '23', '65', '6.3');
+new Salamon('Tokyo', '3', '24', '1.2');
+new Salamon('Dubai', '11', '38', '3.7');
+new Salamon('Paris', '20', '38', '2.3');
+new Salamon('Lima', '2', '16', '4.6');
 
-        var h2El = document.createElement('h2');
-        h2El.textContent = 'Tokyo';
-        articleEl.appendChild(h2El);
+function renderHeader(){
+  var trEl = document.createElement('tr');
+  tableEl.appendChild(trEl);
+  var thElEmpty = document.createElement('th');
+  thElEmpty.textContent = ' ';
+  trEl.appendChild(thElEmpty);
+  for(var i = 0 ; i< hours.length ; i++){
+    var thEl = document.createElement('th');
+    thEl.textContent = hours[i];
+    trEl.appendChild(thEl);
+  }
+  var thElTotal = document.createElement('th');
+  thElTotal.textContent = 'Total';
+  trEl.appendChild(thElTotal);
 
-
-        var ulEl = document.createElement('ul');
-        articleEl.appendChild(ulEl);
-
-        for (let index = 0; index < Hour.length; index++) {
-            var liEl = document.createElement('li');
-            liEl.textContent = `${Hour[index]}: ${this.randomCust[index]}`;
-            articleEl.appendChild(liEl);
+}
+function renderFooter(){
+    var trEl = document.createElement('tr');
+    tableEl.appendChild(trEl);
+    var tdEl = document.createElement('td');
+    trEl.appendChild(tdEl);
+    tdEl.textContent = 'Total';
+    var hourTotal;
+    var megaTotal = 0;
+    for(var hour = 0 ; hour < hours.length ; hour++){
+        hourTotal = 0;
+        for(var shop = 0 ; shop < salmonShops.length ; shop++){
+            hourTotal += salmonShops[shop].cookiesPerHourArr[hour];
         }
+        var tdElTotalHour = document.createElement('td');
+        tdElTotalHour.textContent = hourTotal;
+        megaTotal += hourTotal;
+        trEl.appendChild(tdElTotalHour);
     }
-};
-Tokyo.getCokies();
-Tokyo.Render();
-var Dubai = {
-    min: 11,
-    max: 38,
-    avg: 3.7,
-    randomCust: [],
-    getCokies: function () {
-        for (let index = 0; index < Hour.length; index++) {
-            this.randomCust.push(Math.floor(((getRandomIntsalamon(this.min, this.max) * this.avg))));
-        };
-        // console.log(this.randomCust);
-        console.table(this.randomCust);
-    },
-    Render: function () {
-        var container = document.getElementById("sillsfile");
-        var articleEl = document.createElement('article');
-        container.appendChild(articleEl);
+    var tdMegaTotal = document.createElement('td');
+    tdMegaTotal.textContent = megaTotal;
+    trEl.appendChild(tdMegaTotal);
 
-        var h2El = document.createElement('h2');
-        h2El.textContent = 'Dubai';
-        articleEl.appendChild(h2El);
-
-
-        var ulEl = document.createElement('ul');
-        articleEl.appendChild(ulEl);
-
-        for (let index = 0; index < Hour.length; index++) {
-            var liEl = document.createElement('li');
-            liEl.textContent = `${Hour[index]}: ${this.randomCust[index]}`;
-            articleEl.appendChild(liEl);
-        }
-    }
-};
-Dubai.getCokies();
-Dubai.Render();
-var Paris = {
-    min: 20,
-    max: 38,
-    avg: 2.3,
-    randomCust: [],
-    getCokies: function () {
-        for (let index = 0; index < Hour.length; index++) {
-            this.randomCust.push(Math.floor(((getRandomIntsalamon(this.min, this.max) * this.avg))));
-        };
-        // console.log(this.randomCust);
-        console.table(this.randomCust);
-
-    },
-    Render: function () {
-        var container = document.getElementById("sillsfile");
-        var articleEl = document.createElement('article');
-        container.appendChild(articleEl);
-
-        var h2El = document.createElement('h2');
-        h2El.textContent = 'Paris';
-        articleEl.appendChild(h2El);
-
-
-        var ulEl = document.createElement('ul');
-        articleEl.appendChild(ulEl);
-
-        for (let index = 0; index < Hour.length; index++) {
-            var liEl = document.createElement('li');
-            liEl.textContent = `${Hour[index]}: ${this.randomCust[index]}`;
-            articleEl.appendChild(liEl);
-        }
-    }
-};
-Paris.getCokies();
-Paris.Render();
-var Lima = {
-    min: 2,
-    max: 16,
-    avg: 4.6,
-    randomCust: [],
-    getCokies: function () {
-        for (let index = 0; index < Hour.length; index++) {
-            this.randomCust.push(Math.floor(((getRandomIntsalamon(this.min, this.max) * this.avg))));
-        };
-        // console.log(this.randomCust);
-        console.table(this.randomCust);
-
-    },
-    Render: function () {
-        var container = document.getElementById("sillsfile");
-        var articleEl = document.createElement('article');
-        container.appendChild(articleEl);
-
-        var h2El = document.createElement('h2');
-        h2El.textContent = 'Lima';
-        articleEl.appendChild(h2El);
-
-
-        var ulEl = document.createElement('ul');
-        articleEl.appendChild(ulEl);
-
-        for (let index = 0; index < Hour.length; index++) {
-            var liEl = document.createElement('li');
-            liEl.textContent = `${Hour[index]}: ${this.randomCust[index]}`;
-            articleEl.appendChild(liEl);
-        }
-    }
-};
-//Lima.getCokies();
-//Lima.Render();
+}
+renderHeader();
+for(var i = 0 ; i < salmonShops.length ; i++){
+  salmonShops[i].render();
+}
+renderFooter();
