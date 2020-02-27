@@ -67,14 +67,19 @@ function renderHeader() {
 
 }
 var newStore = document.getElementById('SalamonForm');
-newStore.addEventListener('submit',function(event) {
+console.log(newStore);
+newStore.addEventListener('submit',function(event){
   event.preventDefault();
   var name = event.target.name.value;
   var min = event.target.min.value;
   var max = event.target.max.value;
   var avg = event.target.avg.value;
-  var newSalamon = newStore(name,min,max,avg);
-  newSalamon.render();  
+  //remove footer
+  var newShop = new Salamon(name,min,max,avg);
+  tableEl.deleteRow(tableEl.rows.length-1)
+  newShop.render();  
+  renderFooter();
+  //add footer
 });
 function renderFooter() {
   var trEl = document.createElement('tr');
