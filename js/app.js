@@ -10,7 +10,6 @@ var salmonShops = [];
 var container = document.getElementById('contanir');
 var tableEl = document.createElement('table');
 container.appendChild(tableEl);
-
 function Salamon(name, min, max, avg) {
   this.name = name;
   this.min = min;
@@ -18,7 +17,7 @@ function Salamon(name, min, max, avg) {
   this.avg = avg;
   this.cookiesPerHourArr = [];
   this.total = 0;
-  console.log(this);
+  // console.log(this);
   salmonShops.push(this);
   this.getCokies();
 }
@@ -28,7 +27,6 @@ Salamon.prototype.getCokies = function () {
     this.cookiesPerHourArr.push(cookiesPerHour);
     this.total += this.cookiesPerHourArr[index];
   }
-
 };
 Salamon.prototype.render = function () {
   var trEl = document.createElement('tr');
@@ -109,4 +107,3 @@ for (var i = 0; i < salmonShops.length; i++) {
   salmonShops[i].render();
 }
 renderFooter();
-

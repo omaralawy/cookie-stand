@@ -1,0 +1,45 @@
+body {
+    background-color: rgba(29, 42, 61, 0.452);
+}
+header {
+    padding: 40px;
+    text-align: center;
+     color: maroon;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-weight: bolder;
+    font-size: xx-large;
+}
+article {
+    padding: 80%;
+    padding-bottom: 12%;
+    display: block;
+    color: rgb(71, 67, 71);
+}
+
+article {
+    background-color: rgba(196, 123, 230, 0.712);
+    padding: 10%;
+    font-size: x-large;
+}
+footer {
+    text-align: center;
+    border: 2px
+    solid;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    float: right;
+    margin-bottom: 22px;
+}
+table{
+    font-family: sans-serif;
+    font-size: larger;
+    float: unset;
+    border: solid;
+    border-color: cornsilk;
+    margin-left: auto;
+}
+form {
+font-family: fantasy;    background-color: mediumorchid; font-size: 19px;
+}
